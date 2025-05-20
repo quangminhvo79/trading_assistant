@@ -1,0 +1,34 @@
+<%= content_for :page_header do %>
+  <div class="w-full flex flex-row items-center justify-between">
+    <div class="flex flex-row items-end">
+      <h1 class="text-2xl font-bold">Tokens</h1>
+      <span class="ml-2 text-gray-500 text-sm">(<%= @tokens.count %>)</span>
+    </div>
+    <div class="ml-4">
+      <%= link_to "New Token", new_token_path, class: "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+
+<div>
+  <ul class="list bg-base-100 rounded-box shadow-md">
+    <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most Tokens this week</li>
+    <% @tokens.each do |token| %>
+      <li class="list-row">
+        <div class="text-4xl font-thin opacity-30 tabular-nums"><%= token.id %></div>
+        <div><img class="size-10 rounded-box" src="<%= @logos.fetch(token.symbol_name, '') %>"/></div>
+        <div class="list-col-grow">
+          <div class="font-bold"><%= token.symbol_name %></div>
+          <div class="text-xs uppercase font-semibold opacity-60">Total orders: <%= token.orders.size %></div>
+        </div>
+        <%= link_to edit_token_path(token), class: "btn btn-square btn-ghost" do %>
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+        <% end %>
+        <div class="flex justify-center items-center">
+          <%= check_box :enabled, nil, { class: 'toggle', checked: token.enabled } %>
+        </div>
+      </li>
+    <% end %>
+
+  </ul>
+</div>
