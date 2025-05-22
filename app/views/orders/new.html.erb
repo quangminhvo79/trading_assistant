@@ -1,0 +1,52 @@
+<%= content_for :page_header do %>
+  <div class="w-full flex flex-row items-center justify-between">
+    <div class="flex flex-row items-center">
+      <h1 class="text-2xl font-bold">New Order</h1>
+    </div>
+  </div>
+<% end %>
+
+<div data-controller="trading-view-chart">
+  <div id="chart" class="w-full h-[500px] mb-4 bg-orange-50 grid" data-trading-view-chart-target="chart"
+    data-symbol="BINANCE:ARBUSDT" data-interval="5">
+    <div class="w-full h-full flex items-center justify-center">
+      <span class="loading loading-ring loading-xs"></span>
+      <span class="loading loading-ring loading-sm"></span>
+      <span class="loading loading-ring loading-md"></span>
+      <span class="loading loading-ring loading-lg"></span>
+      <span class="loading loading-ring loading-xl"></span>
+    </div>
+  </div>
+
+  <%= form_for @order, url: orders_path, method: :post, data: { turbo: false } do |f| %>
+    <div class="mt-4 grid grid-cols-4 w-[80%] gap-x-10 gap-y-4 px-5" data-controller="order">
+      <label class="label">Token</label>
+      <%= f.select :token_id, options_for_select(Token.all.pluck(:symbol_name, :id)), {}, { class: "select", data: { action: "trading-view-chart#changeSymbol" } } %>
+
+      <label class="label">Entry Price</label>
+      <%= f.text_field :entry_price, placeholder: "100.000", class: "input", data: { orderTarget: 'entryPrice', action: "order#onChangeEntryPrice" } %>
+
+      <label class="label">USDT amount</label>
+      <%= f.text_field :usdt_amount, placeholder: "100.000", class: "input select-none", readonly: true, disabled: true, data: { orderTarget: 'usdtAmount' } %>
+
+      <label class="label">Stoploss Price</label>
+      <%= f.text_field :stoploss_price, placeholder: "10", class: "input", data: { orderTarget: 'stoplossPrice', action: "order#onChangeStoplossPrice" } %>
+
+      <label class="label">Token Amount</label>
+      <%= f.text_field :token_amount, placeholder: "100.000", class: "input select-none", readonly: true, disabled: true, data: { orderTarget: 'tokenAmount' } %>
+
+      <label class="label">Take Profit Price</label>
+      <%= f.text_field :takeprofit_price, placeholder: "20", class: "input", data: { orderTarget: 'takeProfitPrice', action: "order#onChangeTakeProfitPrice" } %>
+
+      <label class="label">Risk:Reward</label>
+      <%= f.text_field :risk_reward_ratio, class: "input select-none", readonly: true, disabled: true, data: { orderTarget: 'riskReward' } %>
+
+      <label class="label">Side</label>
+      <%= f.select :side, [['Long', 'long'],['Short', 'short']], {}, { class: "select", data: { orderTarget: 'side', action: "order#onChangeSide" } } %>
+    </div>
+
+    <div class="my-4">
+      <%= f.submit "Create Token", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

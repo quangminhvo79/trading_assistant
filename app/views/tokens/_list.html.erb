@@ -1,0 +1,28 @@
+<%= turbo_frame_tag :index_token_list do %>
+  <ul class="list bg-base-100 rounded-box shadow-md">
+    <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most Tokens this week</li>
+    <% @tokens.each do |token| %>
+      <li class="list-row <%= !token.enabled && 'bg-base-200 opacity-[0.7]' %>">
+        <div class="text-4xl font-thin opacity-30 tabular-nums"><%= token.id %></div>
+        <div><img class="size-10 rounded-box" src="<%= token_image(token.symbol_name) %>"/></div>
+        <div class="list-col-grow">
+          <div class="font-bold"><%= token.symbol_name %></div>
+          <div class="text-xs uppercase font-semibold opacity-60">Total orders: <%= token.orders.size %></div>
+        </div>
+        <div class="list-col-grow ml-4">
+          <div class="font-bold cap uppercase flex flex-row gap-3 items-center">
+            <%= token.platform.name %>
+            <span class="badge badge-sm badge-outline badge-success"><%= token.volume_type %></span>
+          </div>
+          <div class="text-xs uppercase font-semibold opacity-60 space-x-4">
+            <span>Current balances: <%= token.current_balances %>$</span>
+          </div>
+        </div>
+        <%= link_to edit_token_path(token), class: "btn btn-square btn-ghost", data: { turbo: false } do %>
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+        <% end %>
+      </li>
+    <% end %>
+
+  </ul>
+<% end %>

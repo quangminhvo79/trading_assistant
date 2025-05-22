@@ -7,6 +7,10 @@ class Platform < ApplicationRecord
 
   before_validation :downcase_name
 
+  def orders
+    Order.where(token_id: tokens.pluck(:id))
+  end
+
   private
 
   def downcase_name

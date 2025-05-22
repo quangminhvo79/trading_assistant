@@ -15,5 +15,5 @@ class Order < ApplicationRecord
   validates :usdt_amount, :token_amount, :entry_price, :stoploss_price, :takeprofit_price,
             :risk_reward_ratio, :status, :side, presence: true
   validates :status, inclusion: { in: STATUS }
-  validates :order_type, inclusion: { in: ORDER_TYPES }
+  validates :side, inclusion: { in: ORDER_TYPES }
 end

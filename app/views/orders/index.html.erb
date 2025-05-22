@@ -1,11 +1,11 @@
 <%= content_for :page_header do %>
   <div class="w-full flex flex-row items-center justify-between">
     <div class="flex flex-row items-start">
-      <h1 class="text-2xl font-bold">Tokens</h1>
-      <span class="ml-2 text-gray-500 text-sm">(<%= @tokens.count %>)</span>
+      <h1 class="text-2xl font-bold">Orders</h1>
+      <span class="ml-2 text-gray-500 text-sm">(<%= @orders.count %>)</span>
     </div>
     <div class="ml-4">
-      <%= link_to "New Token", new_token_path, class: "btn btn-primary" %>
+      <%= link_to "New Order", new_order_path, class: "btn btn-primary" %>
     </div>
   </div>
 <% end %>

@@ -1,0 +1,59 @@
+<%= turbo_frame_tag :index_order_list do %>
+  <ul class="list bg-base-100 rounded-box shadow-md">
+    <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Most Order this week</li>
+    <% @orders.each_with_index do |order, index| %>
+      <% token = order.token %>
+      <li class="list-row">
+        <div class="text-4xl font-thin opacity-30 tabular-nums"><%= index + 1 %></div>
+        <div><img class="size-10 rounded-box" src="<%= token_image(token.symbol_name) %>"/></div>
+        <div class="list-col-grow">
+          <div class="font-bold"><%= token.symbol_name %></div>
+          <div class="text-xs uppercase font-semibold opacity-60 mt-1">Entry: <%= order.entry_price %></div>
+        </div>
+        <div class="list-col-grow ml-4">
+          <div class="font-bold cap uppercase flex flex-row gap-3 items-center">
+            <%= token.platform.name %>
+            <span class="badge badge-sm badge-outline <%= order_side_badge_klass(order) %>"><%= order.side %></span>
+          </div>
+          <div class="text-xs uppercase font-semibold space-x-4 mt-1 flex flex-row items-center">
+            <span class="opacity-60 min-w-[120px]">Take Profit Price:</span>
+            <span class="text-success flex flex-row items-center gap-1">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="16"  height="16"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trending-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></svg>
+              <%= order.takeprofit_price %>
+            </span>
+          </div>
+          <div class="text-xs uppercase font-semibold space-x-4 flex flex-row items-center">
+            <span class="opacity-60 min-w-[120px]">Stoploss Price:</span>
+            <span class="text-error flex flex-row items-center gap-1">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="16"  height="16"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trending-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7l6 6l4 -4l8 8" /><path d="M21 10l0 7l-7 0" /></svg>
+              <%= order.stoploss_price %>
+            </span>
+          </div>
+        </div>
+        <div class="list-col-grow ml-4">
+          <div class="font-bold cap uppercase flex flex-row gap-3 items-center">
+            Profit/Loss
+          </div>
+          <div class="text-xs uppercase font-semibold space-x-4 mt-1 flex flex-row items-center">
+            <span class="opacity-60 min-w-[60px]">Profit:</span>
+            <span class="text-success flex flex-row items-center gap-1">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="16"  height="16"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trending-up"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></svg>
+              <%= order_profit(order) %>$
+            </span>
+          </div>
+          <div class="text-xs uppercase font-semibold space-x-4 flex flex-row items-center">
+            <span class="opacity-60 min-w-[60px]">Loss:</span>
+            <span class="text-error flex flex-row items-center gap-1">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="16"  height="16"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-trending-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7l6 6l4 -4l8 8" /><path d="M21 10l0 7l-7 0" /></svg>
+              <%= order_loss(order) %>$
+            </span>
+          </div>
+        </div>
+        <%= link_to edit_token_path(token), class: "btn btn-square btn-ghost", data: { turbo: false } do %>
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
+        <% end %>
+      </li>
+    <% end %>
+
+  </ul>
+<% end %>
